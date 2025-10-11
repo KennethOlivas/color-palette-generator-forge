@@ -158,7 +158,8 @@ export function PaletteGenerator() {
             drag={!color.locked ? "x" : false}
             dragElastic={0}
             dragMomentum={false}
-            whileDrag={{ scale: 1.02, zIndex: 10, boxShadow: "0 0 0 4px black" }}
+            whileDrag={{  zIndex: 10, boxShadow: "0 0 0 4px black" }}
+        
           >
             <ColorBlock
               color={color}
