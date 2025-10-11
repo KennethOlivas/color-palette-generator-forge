@@ -91,7 +91,7 @@ export function PaletteGenerator() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ type: "linear", duration: 0.15 }}
+        transition={{ type: "tween", ease: "easeInOut", duration: 0.15 }}
         className="border-b-4 border-black p-6 bg-white"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -171,7 +171,7 @@ export function PaletteGenerator() {
       <motion.footer
         initial={{ y: 100 }}
         animate={{ y: 0 }}
-        transition={{ type: "linear", duration: 0.15 }}
+        transition={{ type: "tween", ease: "easeInOut", duration: 0.15 }}
         className="border-t-4 border-black p-4 bg-white"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-8 text-sm font-bold">
