@@ -1,0 +1,155 @@
+"use client"
+
+import { useState } from "react"
+import type { Color } from "@/lib/color-utils"
+import {
+  exportAsCSS,
+  exportAsJSON,
+  exportAsSVG,
+  exportAsASE,
+  exportAsGPL,
+  downloadFile,
+  savePaletteToStorage,
+} from "@/lib/export-utils"
+import { Button } from "@/components/ui/button"
+import { X, Download, Save } from "lucide-react"
+
+interface ExportModalProps {
+  colors: Color[]
+  onClose: () => void
+  onSave?: () => void
+}
+
+export function ExportModal({ colors, onClose, onSave }: ExportModalProps) {
+  const [paletteName, setPaletteName] = useState("My Palette")
+  const [exportFormat, setExportFormat] = useState<"css" | "json" | "svg" | "ase" | "gpl">("css")
+
+  const handleExport = () => {
+    let content = ""
+    let filename = ""
+    let mimeType = ""
+
+    switch (exportFormat) {
+      case "css":
+        content = exportAsCSS(colors, paletteName.toLowerCase().replace(/\s+/g, "-"))
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.css`
+        mimeType = "text/css"
+        break
+      case "json":
+        content = exportAsJSON(colors)
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.json`
+        mimeType = "application/json"
+        break
+      case "svg":
+        content = exportAsSVG(colors)
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.svg`
+        mimeType = "image/svg+xml"
+        break
+      case "ase":
+        content = exportAsASE(colors, paletteName)
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.ase`
+        mimeType = "text/plain"
+        break
+      case "gpl":
+        content = exportAsGPL(colors, paletteName)
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.gpl`
+        mimeType = "text/plain"
+        break
+    }
+
+    downloadFile(content, filename, mimeType)
+  }
+
+  const handleSave = () => {
+    const palette = {
+      id: Date.now().toString(),
+      name: paletteName,
+      colors: colors.map((c) => ({ ...c, locked: false })),
+      createdAt: new Date().toISOString(),
+    }
+    savePaletteToStorage(palette)
+    onSave?.()
+    onClose()
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white border-4 border-black max-w-2xl w-full p-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-3xl font-bold">SAVE & EXPORT</h2>
+          <Button
+            onClick={onClose}
+            variant="ghost"
+            size="icon"
+            className="border-2 border-black hover:bg-black hover:text-white"
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+
+        {/* Palette Preview */}
+        <div className="mb-6">
+          <div className="flex h-20 border-4 border-black">
+            {colors.map((color, index) => (
+              <div key={index} className="flex-1" style={{ backgroundColor: color.hex }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Palette Name */}
+        <div className="mb-6">
+          <label className="block text-sm font-bold mb-2">PALETTE NAME</label>
+          <input
+            type="text"
+            value={paletteName}
+            onChange={(e) => setPaletteName(e.target.value)}
+            className="w-full border-4 border-black p-3 text-xl font-bold"
+            placeholder="My Palette"
+          />
+        </div>
+
+        {/* Save to Local Storage */}
+        <div className="mb-6">
+          <Button
+            onClick={handleSave}
+            className="w-full border-2 border-black bg-black text-white hover:bg-white hover:text-black font-bold"
+          >
+            <Save className="h-5 w-5 mr-2" />
+            SAVE TO LIBRARY
+          </Button>
+        </div>
+
+        {/* Export Format */}
+        <div className="mb-6">
+          <label className="block text-sm font-bold mb-2">EXPORT FORMAT</label>
+          <div className="grid grid-cols-5 gap-2">
+            {(["css", "json", "svg", "ase", "gpl"] as const).map((format) => (
+              <Button
+                key={format}
+                onClick={() => setExportFormat(format)}
+                variant={exportFormat === format ? "default" : "outline"}
+                className={`border-2 border-black font-bold ${
+                  exportFormat === format
+                    ? "bg-black text-white"
+                    : "bg-white text-black hover:bg-black hover:text-white"
+                }`}
+              >
+                {format.toUpperCase()}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Export Button */}
+        <Button
+          onClick={handleExport}
+          className="w-full border-2 border-black bg-black text-white hover:bg-white hover:text-black font-bold"
+        >
+          <Download className="h-5 w-5 mr-2" />
+          EXPORT AS {exportFormat.toUpperCase()}
+        </Button>
+      </div>
+    </div>
+  )
+}
