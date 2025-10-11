@@ -14,7 +14,7 @@ interface ColorBlockProps {
   index: number
 }
 
-export function ColorBlock({ color, onToggleLock, onColorChange, index }: ColorBlockProps) {
+export function ColorBlock({ color, onToggleLock, onColorChange }: ColorBlockProps) {
   const [copied, setCopied] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(color.hex)
