@@ -26,6 +26,10 @@ export default function RootLayout({
       <body className="font-mono antialiased">
         {children}
         <CustomCursor />
+        <footer className="text-md text-center mt-8 text-gray-500">
+          © {new Date().getFullYear()} ColorForge. All rights reserved. <br />
+          Created by <a href="https://www.linkedin.com/in/kenneth-olivas/" target="_blank" rel="noopener noreferrer" className="underline">Kenneth Olivas</a>
+        </footer>
       </body>
     </html>
   )
