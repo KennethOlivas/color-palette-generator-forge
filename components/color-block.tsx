@@ -63,7 +63,7 @@ export function ColorBlock({ color, onToggleLock, onColorChange, index }: ColorB
         )}
 
         {/* Lock/Unlock Button */}
-        <motion.div animate={color.locked ? { rotate: [0, -5, 5, -5, 5, 0] } : {}} transition={{ duration: 0.3 }}>
+    
           <Button
             onClick={onToggleLock}
             variant="ghost"
@@ -73,7 +73,7 @@ export function ColorBlock({ color, onToggleLock, onColorChange, index }: ColorB
           >
             {color.locked ? <Lock className="h-5 w-5" /> : <Unlock className="h-5 w-5" />}
           </Button>
-        </motion.div>
+      
 
         <Button
           onClick={() => setShowEditor(true)}

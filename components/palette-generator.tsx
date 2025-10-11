@@ -137,9 +137,12 @@ export function PaletteGenerator() {
               onClick={handleGenerate}
               className="border-2 border-black bg-black text-white hover:bg-white hover:text-black font-bold transition-colors duration-0"
             >
-              <motion.div animate={isGenerating ? { rotate: 360 } : {}} transition={{ duration: 0.2, ease: "linear" }}>
+                <motion.div
+                animate={isGenerating ? { scale: [1, 1.3, 1], rotate: [0, 20, -20, 0] } : {}}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                >
                 <RefreshCw className="h-5 w-5 mr-2" />
-              </motion.div>
+                </motion.div>
               GENERATE
             </Button>
           </div>
