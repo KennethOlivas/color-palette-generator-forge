@@ -9,6 +9,7 @@ export function Navigation() {
 
   const links = [
     { href: "/", label: "GENERATOR" },
+    { href: "/extract", label: "EXTRACTOR" },
     {
       href: "https://github.com/KennethOlivas/color-palette-generator-forge",
       label: (
