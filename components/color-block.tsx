@@ -198,7 +198,7 @@ export function ColorBlock({ color, onToggleLock, onColorChange }: ColorBlockPro
       </div>
 
       {showEditor && (
-        <ColorEditorPanel color={color} onColorChange={onColorChange} onClose={() => setShowEditor(false)} />
+        <ColorEditorPanel color={color} onColorChange={onColorChange} open={showEditor} onOpenChange={setShowEditor} />
       )}
     </>
   )
