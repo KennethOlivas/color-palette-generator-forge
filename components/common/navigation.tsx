@@ -13,6 +13,7 @@ interface NavigationProps {
     { href: "/extract", label: "EXTRACTOR" },
     { href: "/contrast", label: "CONTRAST" },
     { href: "/gradient", label: "GRADIENT" },
+    { href: "/theme", label: "THEME" },
     {
       href: "https://github.com/KennethOlivas/color-palette-generator-forge",
       label: "GITHUB",
