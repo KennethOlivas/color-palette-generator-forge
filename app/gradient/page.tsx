@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Navigation } from "@/components/navigation";
-import { GradientTypeSelector } from "@/components/gradient-type-selector";
-import { AngleSlider } from "@/components/angle-slider";
-import { ColorStopsEditor } from "@/components/color-stops-editor";
-import { CSSOutput } from "@/components/css-output";
-import { GradientPreview } from "@/components/gradient-preview";
-import { ExampleUsage } from "@/components/example-usage";
-import { PaletteHeader } from "@/components/palette-header";
+import { Navigation } from "@/components/common/navigation";
+import { GradientTypeSelector } from "@/components/gradient/gradient-type-selector";
+import { AngleSlider } from "@/components/gradient/angle-slider";
+import { ColorStopsEditor } from "@/components/gradient/color-stops-editor";
+import { CSSOutput } from "@/components/gradient/css-output";
+import { GradientPreview } from "@/components/gradient/gradient-preview";
+import { ExampleUsage } from "@/components/gradient/example-usage";
+import { PaletteHeader } from "@/components/common/header";
 
 type GradientType = "linear" | "radial" | "ellipse" | "conic" | "repeating-linear";
 

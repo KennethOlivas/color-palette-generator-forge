@@ -7,11 +7,11 @@ import {
   extractColorsFromImage,
   type ExtractedColor,
 } from "@/lib/image-color-extractor";
-import { Navigation } from "@/components/navigation";
+import { Navigation } from "@/components/common/navigation";
 import { Button } from "@/components/ui/button";
 import { Upload, Download, Copy, Check } from "lucide-react";
 import { getContrastColor } from "@/lib/color-utils";
-import { PaletteHeader } from "@/components/palette-header";
+import { PaletteHeader } from "@/components/common/header";
 
 export default function ExtractPage() {
   const [extractedColors, setExtractedColors] = useState<ExtractedColor[]>([]);

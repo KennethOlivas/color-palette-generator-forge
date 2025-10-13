@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navigation } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import {
   checkContrast,
@@ -10,7 +9,7 @@ import {
 } from "@/lib/contrast-utils";
 import { Check, X, AlertCircle } from "lucide-react";
 import { isValidHex } from "@/lib/color-utils";
-import { PaletteHeader } from "@/components/palette-header";
+import { PaletteHeader } from "@/components/common/header";
 
 export default function ContrastPage() {
   const [foreground, setForeground] = useState("#000000");

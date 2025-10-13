@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { type Color, generatePalette } from "@/lib/color-utils"
-import { PaletteHeader } from "./palette-header"
+import { PaletteHeader } from "../common/header"
 import { PaletteFooter } from "./palette-footer"
 import { PaletteBlocks } from "./palette-blocks"
 import { ExportModal } from "./export-modal"
