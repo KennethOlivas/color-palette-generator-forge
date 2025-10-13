@@ -1,6 +1,7 @@
 import { Reorder } from "framer-motion"
 import { ColorBlock } from "./color-block"
 import { type Color } from "@/lib/color-utils"
+import { useState, useEffect } from "react"
 
 interface PaletteBlocksProps {
   colors: Color[]
@@ -10,14 +11,29 @@ interface PaletteBlocksProps {
 }
 
 export function PaletteBlocks({ colors, onReorder, onToggleLock, onColorChange }: PaletteBlocksProps) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640) // sm breakpoint
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
   return (
-    <Reorder.Group axis="x" values={colors} onReorder={onReorder} className="flex-1 flex" as="div">
+    <Reorder.Group
+      axis={isMobile ? "y" : "x"}
+      values={colors}
+      onReorder={onReorder}
+      className={`flex-1 flex ${isMobile ? "flex-col" : "flex-row"}`}
+      as="div"
+    >
       {colors.map((color, idx) => (
         <Reorder.Item
           key={color.hex}
           value={color}
           className="flex-1"
-          drag={!color.locked ? "x" : false}
+          drag={!color.locked ? (isMobile ? "y" : "x") : false}
           dragElastic={0}
           dragMomentum={false}
           whileDrag={{ zIndex: 10, boxShadow: "0 0 0 4px black" }}
