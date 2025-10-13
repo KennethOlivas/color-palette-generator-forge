@@ -18,6 +18,7 @@ import {
   DialogClose,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Slider } from "@/components/ui/slider";
 
 interface ColorEditorPanelProps {
   color: Color;
@@ -161,39 +162,39 @@ export function ColorEditorPanel({
                 <label className="block text-sm font-bold mb-2">
                   HUE: {localColor.hsl.h}°
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="360"
-                  value={localColor.hsl.h}
-                  onChange={(e) => handleHslChange("h", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[localColor.hsl.h]}
+                  min={0}
+                  max={360}
+                  step={1}
+                  onValueChange={(v) => handleHslChange("h", v[0])}
+                  className="w-full"
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">
                   SATURATION: {localColor.hsl.s}%
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={localColor.hsl.s}
-                  onChange={(e) => handleHslChange("s", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[localColor.hsl.s]}
+                  min={0}
+                  max={100}
+                  step={1}
+                  onValueChange={(v) => handleHslChange("s", v[0])}
+                  className="w-full"
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">
                   LIGHTNESS: {localColor.hsl.l}%
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={localColor.hsl.l}
-                  onChange={(e) => handleHslChange("l", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[localColor.hsl.l]}
+                  min={0}
+                  max={100}
+                  step={1}
+                  onValueChange={(v) => handleHslChange("l", v[0])}
+                  className="w-full"
                 />
               </div>
             </>
@@ -205,39 +206,39 @@ export function ColorEditorPanel({
                 <label className="block text-sm font-bold mb-2">
                   RED: {rgb.r}
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={rgb.r}
-                  onChange={(e) => handleRgbChange("r", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[rgb.r]}
+                  min={0}
+                  max={255}
+                  step={1}
+                  onValueChange={(v) => handleRgbChange("r", v[0])}
+                  className="w-full"
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">
                   GREEN: {rgb.g}
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={rgb.g}
-                  onChange={(e) => handleRgbChange("g", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[rgb.g]}
+                  min={0}
+                  max={255}
+                  step={1}
+                  onValueChange={(v) => handleRgbChange("g", v[0])}
+                  className="w-full"
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">
                   BLUE: {rgb.b}
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={rgb.b}
-                  onChange={(e) => handleRgbChange("b", Number(e.target.value))}
-                  className="w-full h-4 accent-black"
+                <Slider
+                  value={[rgb.b]}
+                  min={0}
+                  max={255}
+                  step={1}
+                  onValueChange={(v) => handleRgbChange("b", v[0])}
+                  className="w-full"
                 />
               </div>
             </>
@@ -255,8 +256,6 @@ export function ColorEditorPanel({
             </div>
           )}
         </div>
-
-        {/* Save Button */}
 
         {/* Color Values Display */}
         <div className="mt-6 p-4 border-4 border-black bg-gray-50">

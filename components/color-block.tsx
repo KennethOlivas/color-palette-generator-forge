@@ -123,7 +123,7 @@ export function ColorBlock({ color, onToggleLock, onColorChange }: ColorBlockPro
               onClick={handleCopy}
               variant="outline"
               size="sm"
-              className="border-2 border-current font-bold bg-transparent"
+              className="border-2 border-current font-bold bg-transparent hover:bg-black/10"
               style={{ color: textColor, borderColor: textColor }}
             >
               {copied ? (
