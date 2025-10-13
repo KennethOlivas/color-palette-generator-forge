@@ -5,13 +5,23 @@ import type { Color } from "@/lib/color-utils"
 import { getSavedPalettes, deletePaletteFromStorage, type SavedPalette } from "@/lib/export-utils"
 import { Button } from "@/components/ui/button"
 import { X, Trash2 } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog"
 
 interface SavedPalettesModalProps {
-  onClose: () => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
   onLoad: (colors: Color[]) => void
 }
 
-export function SavedPalettesModal({ onClose, onLoad }: SavedPalettesModalProps) {
+export function SavedPalettesModal({ open, onOpenChange, onLoad }: SavedPalettesModalProps) {
   const [palettes, setPalettes] = useState<SavedPalette[]>([])
 
   useEffect(() => {
@@ -25,26 +35,29 @@ export function SavedPalettesModal({ onClose, onLoad }: SavedPalettesModalProps)
 
   const handleLoad = (palette: SavedPalette) => {
     onLoad(palette.colors)
-    onClose()
+    onOpenChange(false)
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white border-4 border-black max-w-4xl w-full p-8 max-h-[80vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-bold">SAVED PALETTES</h2>
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            size="icon"
-            className="border-2 border-black hover:bg-black hover:text-white"
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl p-8 border-4 border-black bg-white max-h-[80vh] overflow-y-auto" showCloseButton={false} >
+        <DialogHeader className="flex flex-row items-center justify-between mb-4">
+          <DialogTitle className="text-3xl font-bold">SAVED PALETTES</DialogTitle>
+          <DialogClose asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="border-2 border-black hover:bg-black hover:text-white"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </DialogClose>
+        </DialogHeader>
 
-        {/* Palettes List */}
+        <DialogDescription className="sr-only">
+          View and manage your saved color palettes.
+        </DialogDescription>
+
         {palettes.length === 0 ? (
           <div className="border-4 border-black p-12 text-center bg-gray-50">
             <p className="font-bold text-lg">NO SAVED PALETTES YET</p>
@@ -87,7 +100,7 @@ export function SavedPalettesModal({ onClose, onLoad }: SavedPalettesModalProps)
             ))}
           </div>
         )}
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

@@ -13,14 +13,23 @@ import {
 } from "@/lib/export-utils"
 import { Button } from "@/components/ui/button"
 import { X, Download, Save } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/ui/dialog"
 
 interface ExportModalProps {
   colors: Color[]
-  onClose: () => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
   onSave?: () => void
 }
 
-export function ExportModal({ colors, onClose, onSave }: ExportModalProps) {
+export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalProps) {
   const [paletteName, setPaletteName] = useState("My Palette")
   const [exportFormat, setExportFormat] = useState<"css" | "json" | "svg" | "ase" | "gpl">("css")
 
@@ -69,24 +78,28 @@ export function ExportModal({ colors, onClose, onSave }: ExportModalProps) {
     }
     savePaletteToStorage(palette)
     onSave?.()
-    onClose()
+    onOpenChange(false)
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white border-4 border-black max-w-2xl w-full p-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-bold">SAVE & EXPORT</h2>
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            size="icon"
-            className="border-2 border-black hover:bg-black hover:text-white"
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl p-8 border-4 border-black bg-white" showCloseButton={false} >
+        <DialogHeader className="flex flex-row items-center justify-between mb-4">
+          <DialogTitle className="text-3xl font-bold">SAVE & EXPORT</DialogTitle>
+          <DialogClose asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="border-2 border-black hover:bg-black hover:text-white"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </DialogClose>
+        </DialogHeader>
+
+        <DialogDescription className="sr-only">
+          Save or export your generated color palette in multiple formats.
+        </DialogDescription>
 
         {/* Palette Preview */}
         <div className="mb-6">
@@ -149,7 +162,7 @@ export function ExportModal({ colors, onClose, onSave }: ExportModalProps) {
           <Download className="h-5 w-5 mr-2" />
           EXPORT AS {exportFormat.toUpperCase()}
         </Button>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

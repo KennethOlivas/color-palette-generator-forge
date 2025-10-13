@@ -111,11 +111,12 @@ export function PaletteGenerator() {
       {showExportModal && (
         <ExportModal
           colors={colors}
-          onClose={() => setShowExportModal(false)}
+          open={showExportModal}
+          onOpenChange={setShowExportModal}
           onSave={() => setShowExportModal(false)}
         />
       )}
-      {showSavedModal && <SavedPalettesModal onClose={() => setShowSavedModal(false)} onLoad={handleLoadPalette} />}
+      {showSavedModal && <SavedPalettesModal open={showSavedModal} onOpenChange={setShowSavedModal} onLoad={handleLoadPalette} />}
     </div>
   )
 }
