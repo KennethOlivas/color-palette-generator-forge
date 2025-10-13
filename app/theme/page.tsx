@@ -55,7 +55,7 @@ export default function ThemesPage() {
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Left Panel - Theme Configuration */}
             <div className="space-y-6">
               {/* Preset Selector */}
