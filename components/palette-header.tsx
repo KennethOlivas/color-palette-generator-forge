@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
@@ -36,6 +36,18 @@ export function PaletteHeader({
   showRightButtons = true,
 }: PaletteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Block scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
   return (
     <motion.header
@@ -136,17 +148,80 @@ export function PaletteHeader({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 bg-white flex flex-col justify-center items-center space-y-6 z-40 border-t-4 border-black"
+            className="fixed inset-0 bg-white flex flex-col justify-center items-center z-50 border-t-4 border-black w-screen h-screen overflow-y-auto"
+            style={{ touchAction: "none" }}
           >
             <Navigation onClickLink={() => setIsMenuOpen(false)} />
-            <Button
+            {showRightButtons && (
+              <div className="flex flex-col gap-4 w-full max-w-sm px-6 mt-8">
+                <Button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onShowSaved?.();
+                  }}
+                  variant="outline"
+                  className="border-2 border-black hover:bg-black hover:text-white font-bold bg-transparent transition-colors duration-0 w-full"
+                >
+                  <FolderOpen className="h-5 w-5 mr-2" />
+                  LIBRARY
+                </Button>
+                <Button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onShowExport?.();
+                  }}
+                  variant="outline"
+                  className="border-2 border-black hover:bg-black hover:text-white font-bold bg-transparent transition-colors duration-0 w-full"
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  EXPORT
+                </Button>
+                <div className="flex items-center gap-2 w-full">
+                  <Button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      onRemoveColor?.();
+                    }}
+                    variant="outline"
+                    size="icon"
+                    className="border-2 border-black hover:bg-black hover:text-white bg-transparent transition-colors duration-0 flex-1"
+                    disabled={(colorCount ?? 0) <= 2}
+                  >
+                    <Minus className="h-5 w-5" />
+                  </Button>
+                  <span className="text-xl font-bold px-2">{colorCount ?? 0}</span>
+                  <Button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      onAddColor?.();
+                    }}
+                    variant="outline"
+                    size="icon"
+                    className="border-2 border-black hover:bg-black hover:text-white bg-transparent transition-colors duration-0 flex-1"
+                    disabled={(colorCount ?? 0) >= 10}
+                  >
+                    <Plus className="h-5 w-5" />
+                  </Button>
+                </div>
+                <Button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onGenerate?.();
+                  }}
+                  className="border-2 border-black bg-black text-white hover:bg-white hover:text-black font-bold transition-colors duration-0 w-full"
+                >
+                  <RefreshCw className="h-5 w-5 mr-2" />
+                  GENERATE
+                </Button>
+              </div>
+            )}
+            <button
               onClick={() => setIsMenuOpen(false)}
-              variant="outline"
-              className="border-2 border-black font-bold hover:bg-black hover:text-white mt-8"
+              className="absolute top-4 right-4 border-2 border-black rounded-md p-2 bg-white hover:bg-black hover:text-white transition-colors z-50"
+              aria-label="Close menu"
             >
-              <X className="mr-2 h-5 w-5" />
-              CLOSE
-            </Button>
+              <X className="h-6 w-6" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
