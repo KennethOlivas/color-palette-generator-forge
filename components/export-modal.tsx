@@ -21,6 +21,7 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog"
+import { toast } from "sonner"
 
 interface ExportModalProps {
   colors: Color[]
@@ -79,6 +80,7 @@ export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalP
     savePaletteToStorage(palette)
     onSave?.()
     onOpenChange(false)
+    toast.success(`Palette "${paletteName}" saved to library!`)
   }
 
   return (

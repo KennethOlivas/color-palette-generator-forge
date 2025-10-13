@@ -14,6 +14,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog"
+import { toast } from "sonner"
 
 interface SavedPalettesModalProps {
   open: boolean
@@ -31,11 +32,13 @@ export function SavedPalettesModal({ open, onOpenChange, onLoad }: SavedPalettes
   const handleDelete = (id: string) => {
     deletePaletteFromStorage(id)
     setPalettes(getSavedPalettes())
+    toast.success("Palette deleted!")
   }
 
   const handleLoad = (palette: SavedPalette) => {
     onLoad(palette.colors)
     onOpenChange(false)
+    toast.success("Palette loaded!")
   }
 
   return (
