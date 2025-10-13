@@ -1,4 +1,5 @@
 import { Reorder } from "framer-motion"
+import { useRef } from "react"
 import { ColorBlock } from "./color-block"
 import { type Color } from "@/lib/color-utils"
 import { useState, useEffect } from "react"
@@ -12,6 +13,7 @@ interface PaletteBlocksProps {
 
 export function PaletteBlocks({ colors, onReorder, onToggleLock, onColorChange }: PaletteBlocksProps) {
   const [isMobile, setIsMobile] = useState(false)
+  const itemRefs = useRef<any[]>([])
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640) // sm breakpoint
@@ -34,9 +36,11 @@ export function PaletteBlocks({ colors, onReorder, onToggleLock, onColorChange }
           value={color}
           className="flex-1"
           drag={!color.locked ? (isMobile ? "y" : "x") : false}
+          dragListener={!isMobile}
           dragElastic={0}
           dragMomentum={false}
           whileDrag={{ zIndex: 10, boxShadow: "0 0 0 4px black" }}
+          ref={(el: any) => (itemRefs.current[idx] = el)}
         >
           <ColorBlock
             color={color}

@@ -7,14 +7,17 @@ import { Button } from "@/components/ui/button"
 import { ColorEditorPanel } from "./color-editor-panel"
 import { motion } from "framer-motion"
 
+import type { DragControls } from "framer-motion"
+
 interface ColorBlockProps {
   color: Color
   onToggleLock: () => void
   onColorChange: (newColor: Color) => void
   index: number
+  dragControls?: DragControls
 }
 
-export function ColorBlock({ color, onToggleLock, onColorChange }: ColorBlockProps) {
+export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }: ColorBlockProps) {
   const [copied, setCopied] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(color.hex)
@@ -57,7 +60,11 @@ export function ColorBlock({ color, onToggleLock, onColorChange }: ColorBlockPro
         style={{ backgroundColor: color.hex }}
       >
         {!color.locked && (
-          <div className="absolute top-1/2 left-4 -translate-y-1/2 opacity-30 hover:opacity-100 transition-opacity">
+          <div
+            className="absolute top-1/2 left-4 -translate-y-1/2 opacity-30 hover:opacity-100 transition-opacity touch-none"
+            onPointerDown={dragControls ? (e) => dragControls.start(e) : undefined}
+            style={{ touchAction: "none" }}
+          >
             <GripVertical className="h-8 w-8" style={{ color: textColor }} />
           </div>
         )}

@@ -3,13 +3,21 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
+function isMobileDevice() {
+  if (typeof window === "undefined") return false
+  return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(window.navigator.userAgent)
+}
+
 export function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    setIsMobile(isMobileDevice())
+    if (isMobileDevice()) return
 
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
@@ -39,7 +47,7 @@ export function CustomCursor() {
     }
   }, [])
 
-  if (!mounted) return null
+  if (!mounted || isMobile) return null
 
   return (
     <>
