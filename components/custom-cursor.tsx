@@ -1,30 +1,32 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 function isMobileDevice() {
-  if (typeof window === "undefined") return false
-  return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(window.navigator.userAgent)
+  if (typeof window === "undefined") return false;
+  return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    window.navigator.userAgent,
+  );
 }
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isHovering, setIsHovering] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-    setIsMobile(isMobileDevice())
-    if (isMobileDevice()) return
+    setMounted(true);
+    setIsMobile(isMobileDevice());
+    if (isMobileDevice()) return;
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
 
     const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
+      const target = e.target as HTMLElement;
       if (
         target.tagName === "BUTTON" ||
         target.tagName === "A" ||
@@ -32,22 +34,22 @@ export function CustomCursor() {
         target.closest("a") ||
         target.classList.contains("cursor-hover")
       ) {
-        setIsHovering(true)
+        setIsHovering(true);
       } else {
-        setIsHovering(false)
+        setIsHovering(false);
       }
-    }
+    };
 
-    window.addEventListener("mousemove", updateMousePosition)
-    window.addEventListener("mouseover", handleMouseOver)
+    window.addEventListener("mousemove", updateMousePosition);
+    window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition)
-      window.removeEventListener("mouseover", handleMouseOver)
-    }
-  }, [])
+      window.removeEventListener("mousemove", updateMousePosition);
+      window.removeEventListener("mouseover", handleMouseOver);
+    };
+  }, []);
 
-  if (!mounted || isMobile) return null
+  if (!mounted || isMobile) return null;
 
   return (
     <>
@@ -80,5 +82,5 @@ export function CustomCursor() {
         }}
       />
     </>
-  )
+  );
 }

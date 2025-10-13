@@ -1,13 +1,13 @@
 "use client";
 
 import type React from "react";
+import Image from "next/image";
 
 import { useState } from "react";
 import {
   extractColorsFromImage,
   type ExtractedColor,
 } from "@/lib/image-color-extractor";
-import { Navigation } from "@/components/common/navigation";
 import { Button } from "@/components/ui/button";
 import { Upload, Download, Copy, Check } from "lucide-react";
 import { getContrastColor } from "@/lib/color-utils";
@@ -105,16 +105,18 @@ export default function ExtractPage() {
                   />
                 </label>
               </div>
-
               {imagePreview && (
                 <div className="border-4 border-black">
-                  <img
+                  <Image
                     src={imagePreview || "/placeholder.svg"}
                     alt="Uploaded"
+                    width={800}
+                    height={600}
                     className="w-full h-auto"
                   />
                 </div>
               )}
+              )
             </div>
 
             {/* Results Section */}

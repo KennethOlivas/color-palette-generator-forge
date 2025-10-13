@@ -1,57 +1,68 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { type Color, getContrastColor, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils"
-import { Lock, Unlock, Copy, Check, Edit, GripVertical } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { ColorEditorPanel } from "./color-editor-panel"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import {
+  type Color,
+  getContrastColor,
+  hexToHsl,
+  hslToHex,
+  isValidHex,
+} from "@/lib/color-utils";
+import { Lock, Unlock, Copy, Check, Edit, GripVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ColorEditorPanel } from "./color-editor-panel";
+import { motion } from "framer-motion";
 
-import type { DragControls } from "framer-motion"
+import type { DragControls } from "framer-motion";
 
 interface ColorBlockProps {
-  color: Color
-  onToggleLock: () => void
-  onColorChange: (newColor: Color) => void
-  index: number
-  dragControls?: DragControls
+  color: Color;
+  onToggleLock: () => void;
+  onColorChange: (newColor: Color) => void;
+  index: number;
+  dragControls?: DragControls;
 }
 
-export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }: ColorBlockProps) {
-  const [copied, setCopied] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
-  const [editValue, setEditValue] = useState(color.hex)
-  const [showEditor, setShowEditor] = useState(false)
+export function ColorBlock({
+  color,
+  onToggleLock,
+  onColorChange,
+  dragControls,
+}: ColorBlockProps) {
+  const [copied, setCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(color.hex);
+  const [showEditor, setShowEditor] = useState(false);
 
-  const textColor = getContrastColor(color.hex)
+  const textColor = getContrastColor(color.hex);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(color.hex)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    await navigator.clipboard.writeText(color.hex);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleHexEdit = () => {
     if (isValidHex(editValue)) {
-      const hsl = hexToHsl(editValue)
+      const hsl = hexToHsl(editValue);
       onColorChange({
         hex: editValue.startsWith("#") ? editValue : `#${editValue}`,
         hsl,
         locked: color.locked,
-      })
-      setIsEditing(false)
+      });
+      setIsEditing(false);
     }
-  }
+  };
 
   const handleHslChange = (type: "h" | "s" | "l", value: number) => {
-    const newHsl = { ...color.hsl, [type]: value }
-    const newHex = hslToHex(newHsl.h, newHsl.s, newHsl.l)
+    const newHsl = { ...color.hsl, [type]: value };
+    const newHex = hslToHex(newHsl.h, newHsl.s, newHsl.l);
     onColorChange({
       hex: newHex,
       hsl: newHsl,
       locked: color.locked,
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -62,7 +73,9 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
         {!color.locked && (
           <div
             className="absolute top-1/2 left-4 -translate-y-1/2 opacity-30 hover:opacity-100 transition-opacity touch-none"
-            onPointerDown={dragControls ? (e) => dragControls.start(e) : undefined}
+            onPointerDown={
+              dragControls ? (e) => dragControls.start(e) : undefined
+            }
             style={{ touchAction: "none" }}
           >
             <GripVertical className="h-8 w-8" style={{ color: textColor }} />
@@ -70,17 +83,20 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
         )}
 
         {/* Lock/Unlock Button */}
-    
-          <Button
-            onClick={onToggleLock}
-            variant="ghost"
-            size="icon"
-            className="absolute top-4 right-4 border-2 border-black hover:bg-black/10"
-            style={{ color: textColor }}
-          >
-            {color.locked ? <Lock className="h-5 w-5" /> : <Unlock className="h-5 w-5" />}
-          </Button>
-      
+
+        <Button
+          onClick={onToggleLock}
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4 border-2 border-black hover:bg-black/10"
+          style={{ color: textColor }}
+        >
+          {color.locked ? (
+            <Lock className="h-5 w-5" />
+          ) : (
+            <Unlock className="h-5 w-5" />
+          )}
+        </Button>
 
         <Button
           onClick={() => setShowEditor(true)}
@@ -101,10 +117,10 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
               onChange={(e) => setEditValue(e.target.value)}
               onBlur={handleHexEdit}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleHexEdit()
+                if (e.key === "Enter") handleHexEdit();
                 if (e.key === "Escape") {
-                  setIsEditing(false)
-                  setEditValue(color.hex)
+                  setIsEditing(false);
+                  setEditValue(color.hex);
                 }
               }}
               className="text-4xl font-bold tracking-tight bg-transparent border-b-4 border-current text-center uppercase font-mono outline-none w-48"
@@ -123,7 +139,18 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
 
           {/* Copy Button */}
           <motion.div
-            animate={copied ? { backgroundColor: [textColor, "transparent", textColor, "transparent"] } : {}}
+            animate={
+              copied
+                ? {
+                    backgroundColor: [
+                      textColor,
+                      "transparent",
+                      textColor,
+                      "transparent",
+                    ],
+                  }
+                : {}
+            }
             transition={{ duration: 0.3 }}
           >
             <Button
@@ -151,7 +178,10 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
         {/* HSL Sliders */}
         <div className="absolute bottom-4 left-4 right-4 space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold w-4" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-4"
+              style={{ color: textColor }}
+            >
               H
             </span>
             <input
@@ -159,16 +189,24 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
               min="0"
               max="360"
               value={color.hsl.h}
-              onChange={(e) => handleHslChange("h", Number.parseInt(e.target.value))}
+              onChange={(e) =>
+                handleHslChange("h", Number.parseInt(e.target.value))
+              }
               className="flex-1 h-2 accent-current"
               style={{ accentColor: textColor }}
             />
-            <span className="text-xs font-bold w-8 text-right" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-8 text-right"
+              style={{ color: textColor }}
+            >
               {color.hsl.h}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold w-4" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-4"
+              style={{ color: textColor }}
+            >
               S
             </span>
             <input
@@ -176,16 +214,24 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
               min="0"
               max="100"
               value={color.hsl.s}
-              onChange={(e) => handleHslChange("s", Number.parseInt(e.target.value))}
+              onChange={(e) =>
+                handleHslChange("s", Number.parseInt(e.target.value))
+              }
               className="flex-1 h-2 accent-current"
               style={{ accentColor: textColor }}
             />
-            <span className="text-xs font-bold w-8 text-right" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-8 text-right"
+              style={{ color: textColor }}
+            >
               {color.hsl.s}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold w-4" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-4"
+              style={{ color: textColor }}
+            >
               L
             </span>
             <input
@@ -193,11 +239,16 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
               min="0"
               max="100"
               value={color.hsl.l}
-              onChange={(e) => handleHslChange("l", Number.parseInt(e.target.value))}
+              onChange={(e) =>
+                handleHslChange("l", Number.parseInt(e.target.value))
+              }
               className="flex-1 h-2 accent-current"
               style={{ accentColor: textColor }}
             />
-            <span className="text-xs font-bold w-8 text-right" style={{ color: textColor }}>
+            <span
+              className="text-xs font-bold w-8 text-right"
+              style={{ color: textColor }}
+            >
               {color.hsl.l}
             </span>
           </div>
@@ -205,8 +256,13 @@ export function ColorBlock({ color, onToggleLock, onColorChange, dragControls }:
       </div>
 
       {showEditor && (
-        <ColorEditorPanel color={color} onColorChange={onColorChange} open={showEditor} onOpenChange={setShowEditor} />
+        <ColorEditorPanel
+          color={color}
+          onColorChange={onColorChange}
+          open={showEditor}
+          onOpenChange={setShowEditor}
+        />
       )}
     </>
-  )
+  );
 }

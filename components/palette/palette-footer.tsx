@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export function PaletteFooter() {
   return (
@@ -16,5 +16,5 @@ export function PaletteFooter() {
         <span>Click HEX to Edit</span>
       </div>
     </motion.footer>
-  )
+  );
 }

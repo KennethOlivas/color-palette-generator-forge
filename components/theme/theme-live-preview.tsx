@@ -22,19 +22,31 @@ export function ThemeLivePreview({ theme }: ThemeLivePreviewProps) {
         <div className="flex gap-3 flex-wrap">
           <button
             className="px-6 py-3 border-2 font-bold"
-            style={{ backgroundColor: theme.primary, color: theme.background, borderColor: theme.primary }}
+            style={{
+              backgroundColor: theme.primary,
+              color: theme.background,
+              borderColor: theme.primary,
+            }}
           >
             PRIMARY
           </button>
           <button
             className="px-6 py-3 border-2 font-bold"
-            style={{ backgroundColor: theme.secondary, color: theme.background, borderColor: theme.secondary }}
+            style={{
+              backgroundColor: theme.secondary,
+              color: theme.background,
+              borderColor: theme.secondary,
+            }}
           >
             SECONDARY
           </button>
           <button
             className="px-6 py-3 border-2 font-bold"
-            style={{ backgroundColor: "transparent", color: theme.foreground, borderColor: theme.border }}
+            style={{
+              backgroundColor: "transparent",
+              color: theme.foreground,
+              borderColor: theme.border,
+            }}
           >
             OUTLINE
           </button>
@@ -43,14 +55,22 @@ export function ThemeLivePreview({ theme }: ThemeLivePreviewProps) {
       {/* Cards */}
       <div className="space-y-3">
         <h3 className="text-sm font-bold uppercase">Cards</h3>
-        <div className="border-4 p-6 space-y-3" style={{ borderColor: theme.border }}>
+        <div
+          className="border-4 p-6 space-y-3"
+          style={{ borderColor: theme.border }}
+        >
           <h4 className="text-xl font-bold">Card Title</h4>
           <p className="text-sm" style={{ color: theme.muted }}>
-            This is a card component with your custom theme applied. It uses the border and muted colors.
+            This is a card component with your custom theme applied. It uses the
+            border and muted colors.
           </p>
           <button
             className="px-4 py-2 border-2 font-bold text-sm"
-            style={{ backgroundColor: theme.accent, color: theme.background, borderColor: theme.accent }}
+            style={{
+              backgroundColor: theme.accent,
+              color: theme.background,
+              borderColor: theme.accent,
+            }}
           >
             ACCENT BUTTON
           </button>
@@ -63,7 +83,11 @@ export function ThemeLivePreview({ theme }: ThemeLivePreviewProps) {
           type="text"
           placeholder="Enter text..."
           className="w-full px-4 py-3 border-2 font-mono"
-          style={{ backgroundColor: theme.background, color: theme.foreground, borderColor: theme.border }}
+          style={{
+            backgroundColor: theme.background,
+            color: theme.foreground,
+            borderColor: theme.border,
+          }}
         />
       </div>
       {/* Badges */}
@@ -72,28 +96,45 @@ export function ThemeLivePreview({ theme }: ThemeLivePreviewProps) {
         <div className="flex gap-2 flex-wrap">
           <span
             className="px-3 py-1 text-xs font-bold border-2"
-            style={{ backgroundColor: theme.primary, color: theme.background, borderColor: theme.primary }}
+            style={{
+              backgroundColor: theme.primary,
+              color: theme.background,
+              borderColor: theme.primary,
+            }}
           >
             PRIMARY
           </span>
           <span
             className="px-3 py-1 text-xs font-bold border-2"
-            style={{ backgroundColor: theme.secondary, color: theme.background, borderColor: theme.secondary }}
+            style={{
+              backgroundColor: theme.secondary,
+              color: theme.background,
+              borderColor: theme.secondary,
+            }}
           >
             SECONDARY
           </span>
           <span
             className="px-3 py-1 text-xs font-bold border-2"
-            style={{ backgroundColor: theme.destructive, color: theme.background, borderColor: theme.destructive }}
+            style={{
+              backgroundColor: theme.destructive,
+              color: theme.background,
+              borderColor: theme.destructive,
+            }}
           >
             DESTRUCTIVE
           </span>
         </div>
       </div>
       {/* Alert */}
-      <div className="border-4 p-4" style={{ backgroundColor: theme.muted, borderColor: theme.border }}>
+      <div
+        className="border-4 p-4"
+        style={{ backgroundColor: theme.muted, borderColor: theme.border }}
+      >
         <h4 className="text-sm font-bold mb-2">ALERT MESSAGE</h4>
-        <p className="text-xs">This is an alert component using the muted background color.</p>
+        <p className="text-xs">
+          This is an alert component using the muted background color.
+        </p>
       </div>
     </motion.div>
   );

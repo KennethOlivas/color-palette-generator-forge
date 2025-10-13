@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type { Color } from "@/lib/color-utils"
+import { useState } from "react";
+import type { Color } from "@/lib/color-utils";
 import {
   exportAsCSS,
   exportAsJSON,
@@ -10,9 +10,9 @@ import {
   exportAsGPL,
   downloadFile,
   savePaletteToStorage,
-} from "@/lib/export-utils"
-import { Button } from "@/components/ui/button"
-import { X, Download, Save } from "lucide-react"
+} from "@/lib/export-utils";
+import { Button } from "@/components/ui/button";
+import { X, Download, Save } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -20,55 +20,65 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from "@/components/ui/dialog"
-import { toast } from "sonner"
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface ExportModalProps {
-  colors: Color[]
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onSave?: () => void
+  colors: Color[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave?: () => void;
 }
 
-export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalProps) {
-  const [paletteName, setPaletteName] = useState("My Palette")
-  const [exportFormat, setExportFormat] = useState<"css" | "json" | "svg" | "ase" | "gpl">("css")
+export function ExportModal({
+  colors,
+  open,
+  onOpenChange,
+  onSave,
+}: ExportModalProps) {
+  const [paletteName, setPaletteName] = useState("My Palette");
+  const [exportFormat, setExportFormat] = useState<
+    "css" | "json" | "svg" | "ase" | "gpl"
+  >("css");
 
   const handleExport = () => {
-    let content = ""
-    let filename = ""
-    let mimeType = ""
+    let content = "";
+    let filename = "";
+    let mimeType = "";
 
     switch (exportFormat) {
       case "css":
-        content = exportAsCSS(colors, paletteName.toLowerCase().replace(/\s+/g, "-"))
-        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.css`
-        mimeType = "text/css"
-        break
+        content = exportAsCSS(
+          colors,
+          paletteName.toLowerCase().replace(/\s+/g, "-"),
+        );
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.css`;
+        mimeType = "text/css";
+        break;
       case "json":
-        content = exportAsJSON(colors)
-        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.json`
-        mimeType = "application/json"
-        break
+        content = exportAsJSON(colors);
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.json`;
+        mimeType = "application/json";
+        break;
       case "svg":
-        content = exportAsSVG(colors)
-        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.svg`
-        mimeType = "image/svg+xml"
-        break
+        content = exportAsSVG(colors);
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.svg`;
+        mimeType = "image/svg+xml";
+        break;
       case "ase":
-        content = exportAsASE(colors, paletteName)
-        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.ase`
-        mimeType = "text/plain"
-        break
+        content = exportAsASE(colors, paletteName);
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.ase`;
+        mimeType = "text/plain";
+        break;
       case "gpl":
-        content = exportAsGPL(colors, paletteName)
-        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.gpl`
-        mimeType = "text/plain"
-        break
+        content = exportAsGPL(colors, paletteName);
+        filename = `${paletteName.toLowerCase().replace(/\s+/g, "-")}.gpl`;
+        mimeType = "text/plain";
+        break;
     }
 
-    downloadFile(content, filename, mimeType)
-  }
+    downloadFile(content, filename, mimeType);
+  };
 
   const handleSave = () => {
     const palette = {
@@ -76,18 +86,23 @@ export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalP
       name: paletteName,
       colors: colors.map((c) => ({ ...c, locked: false })),
       createdAt: new Date().toISOString(),
-    }
-    savePaletteToStorage(palette)
-    onSave?.()
-    onOpenChange(false)
-    toast.success(`Palette "${paletteName}" saved to library!`)
-  }
+    };
+    savePaletteToStorage(palette);
+    onSave?.();
+    onOpenChange(false);
+    toast.success(`Palette "${paletteName}" saved to library!`);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-8 border-4 border-black bg-white" showCloseButton={false} >
+      <DialogContent
+        className="max-w-2xl p-8 border-4 border-black bg-white"
+        showCloseButton={false}
+      >
         <DialogHeader className="flex flex-row items-center justify-between mb-4">
-          <DialogTitle className="text-3xl font-bold">SAVE & EXPORT</DialogTitle>
+          <DialogTitle className="text-3xl font-bold">
+            SAVE & EXPORT
+          </DialogTitle>
           <DialogClose asChild>
             <Button
               variant="ghost"
@@ -107,7 +122,11 @@ export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalP
         <div className="mb-6">
           <div className="flex h-20 border-4 border-black">
             {colors.map((color, index) => (
-              <div key={index} className="flex-1" style={{ backgroundColor: color.hex }} />
+              <div
+                key={index}
+                className="flex-1"
+                style={{ backgroundColor: color.hex }}
+              />
             ))}
           </div>
         </div>
@@ -166,5 +185,5 @@ export function ExportModal({ colors, open, onOpenChange, onSave }: ExportModalP
         </Button>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

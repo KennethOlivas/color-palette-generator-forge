@@ -1,13 +1,21 @@
 import { Button } from "@/components/ui/button";
 
-export type GradientType = "linear" | "radial" | "ellipse" | "conic" | "repeating-linear";
+export type GradientType =
+  | "linear"
+  | "radial"
+  | "ellipse"
+  | "conic"
+  | "repeating-linear";
 
 interface GradientTypeSelectorProps {
   gradientType: GradientType;
   setGradientType: (type: GradientType) => void;
 }
 
-export function GradientTypeSelector({ gradientType, setGradientType }: GradientTypeSelectorProps) {
+export function GradientTypeSelector({
+  gradientType,
+  setGradientType,
+}: GradientTypeSelectorProps) {
   return (
     <div className="border-4 border-black p-6 bg-gray-50">
       <h3 className="text-2xl font-bold mb-4">TYPE</h3>

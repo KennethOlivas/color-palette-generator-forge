@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
-import { generateTailwindConfig, generateCSSVariables } from "@/lib/theme-utils";
+import {
+  generateTailwindConfig,
+  generateCSSVariables,
+} from "@/lib/theme-utils";
 import type { ThemeMapping } from "@/lib/theme-utils";
 
 interface ThemeExportPanelProps {
@@ -24,7 +27,9 @@ export function ThemeExportPanel({ theme, onCopy }: ThemeExportPanelProps) {
             <Copy className="h-4 w-4" />
           </Button>
         </div>
-        <pre className="text-xs font-mono overflow-x-auto">{generateTailwindConfig(theme)}</pre>
+        <pre className="text-xs font-mono overflow-x-auto">
+          {generateTailwindConfig(theme)}
+        </pre>
       </div>
       <div className="border-4 border-black p-4 bg-gray-50">
         <div className="flex items-center justify-between mb-2">
@@ -38,7 +43,9 @@ export function ThemeExportPanel({ theme, onCopy }: ThemeExportPanelProps) {
             <Copy className="h-4 w-4" />
           </Button>
         </div>
-        <pre className="text-xs font-mono overflow-x-auto">{generateCSSVariables(theme)}</pre>
+        <pre className="text-xs font-mono overflow-x-auto">
+          {generateCSSVariables(theme)}
+        </pre>
       </div>
     </div>
   );

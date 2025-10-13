@@ -18,7 +18,7 @@ export function ExampleUsage({ css }: ExampleUsageProps) {
         <div>
           <p className="text-sm font-bold mb-2">TAILWIND (arbitrary value)</p>
           <code className="block p-3 bg-white border-2 border-black text-xs font-mono break-all">
-            className="bg-[{css}]"
+            className=&quot;bg-[{css}]&quot;
           </code>
         </div>
       </div>

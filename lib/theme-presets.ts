@@ -1,9 +1,9 @@
-import type { ThemeMapping } from "./theme-utils"
+import type { ThemeMapping } from "./theme-utils";
 
 export interface ThemePreset {
-  name: string
-  description: string
-  theme: ThemeMapping
+  name: string;
+  description: string;
+  theme: ThemeMapping;
 }
 
 export const themePresets: ThemePreset[] = [
@@ -77,4 +77,4 @@ export const themePresets: ThemePreset[] = [
       destructive: "#FF3366",
     },
   },
-]
+];

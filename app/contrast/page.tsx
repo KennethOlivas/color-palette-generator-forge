@@ -60,7 +60,9 @@ export default function ContrastPage() {
       {/* Main Content */}
       <main className="flex-1 p-4 md:p-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center md:text-left">CONTRAST CHECKER</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center md:text-left">
+            CONTRAST CHECKER
+          </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {/* Input Section */}
@@ -152,7 +154,10 @@ export default function ContrastPage() {
                 >
                   NORMAL TEXT PREVIEW
                 </p>
-                <p className="text-2xl md:text-4xl font-bold" style={{ color: foreground }}>
+                <p
+                  className="text-2xl md:text-4xl font-bold"
+                  style={{ color: foreground }}
+                >
                   LARGE TEXT PREVIEW
                 </p>
               </div>
@@ -164,7 +169,9 @@ export default function ContrastPage() {
                 <>
                   {/* Contrast Ratio */}
                   <div className="border-4 border-black p-4 md:p-6 bg-gray-50 rounded-lg">
-                    <h3 className="text-xl md:text-2xl font-bold mb-4">CONTRAST RATIO</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-4">
+                      CONTRAST RATIO
+                    </h3>
                     <p className="text-4xl md:text-6xl font-bold">
                       {result.ratio.toFixed(2)}:1
                     </p>
@@ -172,12 +179,16 @@ export default function ContrastPage() {
 
                   {/* WCAG Compliance */}
                   <div className="border-4 border-black p-4 md:p-6 bg-gray-50 rounded-lg">
-                    <h3 className="text-xl md:text-2xl font-bold mb-4">WCAG COMPLIANCE</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-4">
+                      WCAG COMPLIANCE
+                    </h3>
 
                     <div className="space-y-4">
                       {/* AA Level */}
                       <div>
-                        <h4 className="text-lg md:text-xl font-bold mb-2">AA LEVEL</h4>
+                        <h4 className="text-lg md:text-xl font-bold mb-2">
+                          AA LEVEL
+                        </h4>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between p-3 border-2 border-black rounded">
                             <span className="font-bold text-xs md:text-base">
@@ -190,7 +201,9 @@ export default function ContrastPage() {
                             )}
                           </div>
                           <div className="flex items-center justify-between p-3 border-2 border-black rounded">
-                            <span className="font-bold text-xs md:text-base">Large Text (3:1)</span>
+                            <span className="font-bold text-xs md:text-base">
+                              Large Text (3:1)
+                            </span>
                             {result.aa.large ? (
                               <Check className="h-6 w-6 text-green-600" />
                             ) : (
@@ -202,10 +215,14 @@ export default function ContrastPage() {
 
                       {/* AAA Level */}
                       <div>
-                        <h4 className="text-lg md:text-xl font-bold mb-2">AAA LEVEL</h4>
+                        <h4 className="text-lg md:text-xl font-bold mb-2">
+                          AAA LEVEL
+                        </h4>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between p-3 border-2 border-black rounded">
-                            <span className="font-bold text-xs md:text-base">Normal Text (7:1)</span>
+                            <span className="font-bold text-xs md:text-base">
+                              Normal Text (7:1)
+                            </span>
                             {result.aaa.normal ? (
                               <Check className="h-6 w-6 text-green-600" />
                             ) : (

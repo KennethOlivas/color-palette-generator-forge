@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navigation } from "@/components/common/navigation";
 import { GradientTypeSelector } from "@/components/gradient/gradient-type-selector";
 import { AngleSlider } from "@/components/gradient/angle-slider";
 import { ColorStopsEditor } from "@/components/gradient/color-stops-editor";
@@ -10,7 +9,12 @@ import { GradientPreview } from "@/components/gradient/gradient-preview";
 import { ExampleUsage } from "@/components/gradient/example-usage";
 import { PaletteHeader } from "@/components/common/header";
 
-type GradientType = "linear" | "radial" | "ellipse" | "conic" | "repeating-linear";
+type GradientType =
+  | "linear"
+  | "radial"
+  | "ellipse"
+  | "conic"
+  | "repeating-linear";
 
 interface ColorStop {
   color: string;
@@ -94,8 +98,18 @@ export default function GradientPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Controls Section */}
             <div className="space-y-6">
-              <GradientTypeSelector gradientType={gradientType} setGradientType={setGradientType} />
-              <AngleSlider angle={angle} setAngle={setAngle} visible={gradientType === "linear" || gradientType === "repeating-linear"} />
+              <GradientTypeSelector
+                gradientType={gradientType}
+                setGradientType={setGradientType}
+              />
+              <AngleSlider
+                angle={angle}
+                setAngle={setAngle}
+                visible={
+                  gradientType === "linear" ||
+                  gradientType === "repeating-linear"
+                }
+              />
               <ColorStopsEditor
                 colorStops={colorStops}
                 onAdd={handleAddColorStop}
@@ -103,7 +117,11 @@ export default function GradientPage() {
                 onColorChange={handleColorChange}
                 onPositionChange={handlePositionChange}
               />
-              <CSSOutput css={generateGradientCSS()} copied={copied} onCopy={handleCopyCSS} />
+              <CSSOutput
+                css={generateGradientCSS()}
+                copied={copied}
+                onCopy={handleCopyCSS}
+              />
             </div>
             {/* Preview Section */}
             <div className="space-y-6">

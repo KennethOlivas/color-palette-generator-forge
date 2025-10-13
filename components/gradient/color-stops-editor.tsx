@@ -71,7 +71,9 @@ export function ColorStopsEditor({
                 min="0"
                 max="100"
                 value={stop.position}
-                onChange={(e) => onPositionChange(index, Number.parseInt(e.target.value))}
+                onChange={(e) =>
+                  onPositionChange(index, Number.parseInt(e.target.value))
+                }
                 className="w-full h-3 accent-black"
               />
             </div>

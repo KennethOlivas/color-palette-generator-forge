@@ -189,7 +189,9 @@ export function PaletteHeader({
                   >
                     <Minus className="h-5 w-5" />
                   </Button>
-                  <span className="text-xl font-bold px-2">{colorCount ?? 0}</span>
+                  <span className="text-xl font-bold px-2">
+                    {colorCount ?? 0}
+                  </span>
                   <Button
                     onClick={() => {
                       setIsMenuOpen(false);

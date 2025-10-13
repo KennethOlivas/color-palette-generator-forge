@@ -1,87 +1,93 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import { type Color, generatePalette } from "@/lib/color-utils"
-import { PaletteHeader } from "../common/header"
-import { PaletteFooter } from "./palette-footer"
-import { PaletteBlocks } from "./palette-blocks"
-import { ExportModal } from "./export-modal"
-import { SavedPalettesModal } from "./saved-palettes-modal"
+import { useState, useEffect, useCallback } from "react";
+import { type Color, generatePalette } from "@/lib/color-utils";
+import { PaletteHeader } from "../common/header";
+import { PaletteFooter } from "./palette-footer";
+import { PaletteBlocks } from "./palette-blocks";
+import { ExportModal } from "./export-modal";
+import { SavedPalettesModal } from "./saved-palettes-modal";
 
 export function PaletteGenerator() {
-  const [colors, setColors] = useState<Color[]>([])
-  const [colorCount, setColorCount] = useState(5)
-  const [showExportModal, setShowExportModal] = useState(false)
-  const [showSavedModal, setShowSavedModal] = useState(false)
-  const [isGenerating, setIsGenerating] = useState(false)
+  const [colors, setColors] = useState<Color[]>([]);
+  const [colorCount, setColorCount] = useState(5);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showSavedModal, setShowSavedModal] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // Generate initial palette
   useEffect(() => {
-    setColors(generatePalette(colorCount))
-  }, [])
+    setColors(generatePalette(colorCount));
+  }, [colorCount]);
 
   // Generate new palette (respecting locked colors)
   const handleGenerate = useCallback(() => {
-    setIsGenerating(true)
+    setIsGenerating(true);
     setTimeout(() => {
-      setColors(generatePalette(colorCount, colors))
-      setIsGenerating(false)
-    }, 200)
-  }, [colorCount, colors])
+      setColors(generatePalette(colorCount, colors));
+      setIsGenerating(false);
+    }, 200);
+  }, [colorCount, colors]);
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       // Space - Generate new palette
       if (e.code === "Space" && e.target === document.body) {
-        e.preventDefault()
-        handleGenerate()
+        e.preventDefault();
+        handleGenerate();
       }
       // L - Lock/unlock first unlocked color
       if (e.key === "l" || e.key === "L") {
-        const firstUnlocked = colors.findIndex((c) => !c.locked)
+        const firstUnlocked = colors.findIndex((c) => !c.locked);
         if (firstUnlocked !== -1) {
-          handleToggleLock(firstUnlocked)
+          handleToggleLock(firstUnlocked);
         }
       }
       // C - Copy first color
       if (e.key === "c" || e.key === "C") {
         if (colors[0]) {
-          navigator.clipboard.writeText(colors[0].hex)
+          navigator.clipboard.writeText(colors[0].hex);
         }
       }
-    }
+    };
 
-    window.addEventListener("keydown", handleKeyPress)
-    return () => window.removeEventListener("keydown", handleKeyPress)
-  }, [colors, handleGenerate])
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [colors, handleGenerate]);
 
   const handleToggleLock = (index: number) => {
-    setColors((prev) => prev.map((color, i) => (i === index ? { ...color, locked: !color.locked } : color)))
-  }
+    setColors((prev) =>
+      prev.map((color, i) =>
+        i === index ? { ...color, locked: !color.locked } : color,
+      ),
+    );
+  };
 
   const handleColorChange = (index: number, newColor: Color) => {
-    setColors((prev) => prev.map((color, i) => (i === index ? newColor : color)))
-  }
+    setColors((prev) =>
+      prev.map((color, i) => (i === index ? newColor : color)),
+    );
+  };
 
   const handleAddColor = () => {
     if (colorCount < 10) {
-      setColorCount((prev) => prev + 1)
-      setColors((prev) => [...prev, generatePalette(1)[0]])
+      setColorCount((prev) => prev + 1);
+      setColors((prev) => [...prev, generatePalette(1)[0]]);
     }
-  }
+  };
 
   const handleRemoveColor = () => {
     if (colorCount > 2) {
-      setColorCount((prev) => prev - 1)
-      setColors((prev) => prev.slice(0, -1))
+      setColorCount((prev) => prev - 1);
+      setColors((prev) => prev.slice(0, -1));
     }
-  }
+  };
 
   const handleLoadPalette = (loadedColors: Color[]) => {
-    setColors(loadedColors)
-    setColorCount(loadedColors.length)
-  }
+    setColors(loadedColors);
+    setColorCount(loadedColors.length);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -116,7 +122,13 @@ export function PaletteGenerator() {
           onSave={() => setShowExportModal(false)}
         />
       )}
-      {showSavedModal && <SavedPalettesModal open={showSavedModal} onOpenChange={setShowSavedModal} onLoad={handleLoadPalette} />}
+      {showSavedModal && (
+        <SavedPalettesModal
+          open={showSavedModal}
+          onOpenChange={setShowSavedModal}
+          onLoad={handleLoadPalette}
+        />
+      )}
     </div>
-  )
+  );
 }
