@@ -8,19 +8,22 @@ interface NavigationProps {
   onClickLink?: () => void
 }
 
-export function Navigation({ onClickLink }: NavigationProps) {
-  const pathname = usePathname()
-
   const links = [
     { href: "/", label: "GENERATOR" },
     { href: "/extract", label: "EXTRACTOR" },
     { href: "/contrast", label: "CONTRAST" },
+    { href: "/gradient", label: "GRADIENT" },
     {
       href: "https://github.com/KennethOlivas/color-palette-generator-forge",
       label: "GITHUB",
       external: true,
     },
   ]
+
+
+export function Navigation({ onClickLink }: NavigationProps) {
+  const pathname = usePathname()
+
 
   return (
     <nav className="flex flex-col sm:flex-row gap-4 items-center">
