@@ -11,6 +11,10 @@ export function Navigation() {
     { href: "/", label: "GENERATOR" },
     { href: "/extract", label: "EXTRACTOR" },
     {
+      href: "/contrast",
+      label: "CONTRAST",
+    },
+    {
       href: "https://github.com/KennethOlivas/color-palette-generator-forge",
       label: (
         <span className="flex items-center gap-1">

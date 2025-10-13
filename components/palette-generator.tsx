@@ -2,13 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { type Color, generatePalette } from "@/lib/color-utils"
-import { ColorBlock } from "./color-block"
-import { Button } from "@/components/ui/button"
-import { RefreshCw, Plus, Minus, Download, FolderOpen } from "lucide-react"
-import { Navigation } from "./navigation"
+import { PaletteHeader } from "./palette-header"
+import { PaletteFooter } from "./palette-footer"
+import { PaletteBlocks } from "./palette-blocks"
 import { ExportModal } from "./export-modal"
 import { SavedPalettesModal } from "./saved-palettes-modal"
-import { motion, Reorder } from "framer-motion"
 
 export function PaletteGenerator() {
   const [colors, setColors] = useState<Color[]>([])
@@ -88,104 +86,26 @@ export function PaletteGenerator() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "tween", ease: "easeInOut", duration: 0.15 }}
-        className="border-b-4 border-black p-6 bg-white"
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-5xl font-bold tracking-tight">COLORFORGE</h1>
-          <Navigation />
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={() => setShowSavedModal(true)}
-              variant="outline"
-              className="border-2 border-black hover:bg-black hover:text-white font-bold bg-transparent transition-colors duration-0"
-            >
-              <FolderOpen className="h-5 w-5 mr-2" />
-              LIBRARY
-            </Button>
-            <Button
-              onClick={() => setShowExportModal(true)}
-              variant="outline"
-              className="border-2 border-black hover:bg-black hover:text-white font-bold bg-transparent transition-colors duration-0"
-            >
-              <Download className="h-5 w-5 mr-2" />
-              EXPORT
-            </Button>
-            <Button
-              onClick={handleRemoveColor}
-              variant="outline"
-              size="icon"
-              className="border-2 border-black hover:bg-black hover:text-white bg-transparent transition-colors duration-0"
-              disabled={colorCount <= 2}
-            >
-              <Minus className="h-5 w-5" />
-            </Button>
-            <span className="text-xl font-bold">{colorCount}</span>
-            <Button
-              onClick={handleAddColor}
-              variant="outline"
-              size="icon"
-              className="border-2 border-black hover:bg-black hover:text-white bg-transparent transition-colors duration-0"
-              disabled={colorCount >= 10}
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
-            <Button
-              onClick={handleGenerate}
-              className="border-2 border-black bg-black text-white hover:bg-white hover:text-black font-bold transition-colors duration-0"
-            >
-                <motion.div
-                animate={isGenerating ? { scale: [1, 1.3, 1], rotate: [0, 20, -20, 0] } : {}}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                >
-                <RefreshCw className="h-5 w-5 mr-2" />
-                </motion.div>
-              GENERATE
-            </Button>
-          </div>
-        </div>
-      </motion.header>
+      <PaletteHeader
+        colorCount={colorCount}
+        isGenerating={isGenerating}
+        onAddColor={handleAddColor}
+        onRemoveColor={handleRemoveColor}
+        onGenerate={handleGenerate}
+        onShowExport={() => setShowExportModal(true)}
+        onShowSaved={() => setShowSavedModal(true)}
+        showRightButtons={true}
+      />
 
-      <Reorder.Group axis="x" values={colors} onReorder={setColors} className="flex-1 flex" as="div">
-        {colors.map((color) => (
-          <Reorder.Item
-            key={color.hex}
-            value={color}
-            className="flex-1"
-            drag={!color.locked ? "x" : false}
-            dragElastic={0}
-            dragMomentum={false}
-            whileDrag={{  zIndex: 10, boxShadow: "0 0 0 4px black" }}
-        
-          >
-            <ColorBlock
-              color={color}
-              index={colors.indexOf(color)}
-              onToggleLock={() => handleToggleLock(colors.indexOf(color))}
-              onColorChange={(newColor) => handleColorChange(colors.indexOf(color), newColor)}
-            />
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
+      <PaletteBlocks
+        colors={colors}
+        onReorder={setColors}
+        onToggleLock={handleToggleLock}
+        onColorChange={handleColorChange}
+      />
 
       {/* Footer with keyboard shortcuts */}
-      <motion.footer
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "tween", ease: "easeInOut", duration: 0.15 }}
-        className="border-t-4 border-black p-4 bg-white"
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-8 text-sm font-bold">
-          <span>SPACE - Generate</span>
-          <span>L - Lock/Unlock</span>
-          <span>C - Copy</span>
-          <span>Drag to Reorder</span>
-          <span>Click HEX to Edit</span>
-        </div>
-      </motion.footer>
+      <PaletteFooter />
 
       {/* Modals */}
       {showExportModal && (
